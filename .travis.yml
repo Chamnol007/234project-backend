@@ -15,7 +15,7 @@ install:
   .
 - docker push chamnol007/234-project
 - docker pull dto80/project234-frontend
-cashe:
+cache:
   directories:
   - "$HOME/.m2"
 env:
