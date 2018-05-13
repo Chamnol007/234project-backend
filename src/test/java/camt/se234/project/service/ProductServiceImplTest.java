@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
@@ -32,8 +33,15 @@ public class ProductServiceImplTest {
     public void testGetProducts(){
         List<Product> mockProducts = new ArrayList<>();
         mockProducts.add(new Product("D001","Milk","Drink","image/",2500));
+        mockProducts.add(new Product("D002","Coke","Drink","image/",2500));
+        mockProducts.add(new Product("F001","Hotdog","Drink","image/",2500));
         when(productDao.getProducts()).thenReturn(mockProducts);
-        assertThat(productService.getAllProducts(), hasItem(new Product("D001","Milk","Drink","image/",2500)));
+        assertThat(productService.getAllProducts(), hasItem(new
+                Product("D001","Milk","Drink","image/",2500)));
+        assertThat(productService.getAllProducts(), hasItems(new
+                Product("D001","Milk","Drink","image/",2500),
+                new Product("D002","Coke","Drink","image/",2500),
+                new Product("F001","Hotdog","Drink","image/",2500)));
     }
 
     @Test(expected = AssertionError.class)
@@ -45,8 +53,12 @@ public class ProductServiceImplTest {
     public void testGetAvailableProducts(){
         List<Product> mockProducts = new ArrayList<>();
         mockProducts.add(new Product("D001","Milk","Drink","image/",2500));
+        mockProducts.add(new Product("D002","Coke","Drink","image/",2500));
+        mockProducts.add(new Product("F001","Hotdog","Drink","image/",-2500));
         when(productDao.getProducts()).thenReturn(mockProducts);
-        assertThat(productService.getAvailableProducts(), hasItem(new Product("D001","Milk","Drink","image/",2500)));
+        assertThat(productService.getAvailableProducts(), hasItems(
+                new Product("D001","Milk","Drink","image/",2500),
+                new Product("D002","Coke","Drink","image/",2500)));
     }
 
     @Test (expected = NoDataException.class)
